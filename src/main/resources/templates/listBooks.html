@@ -31,16 +31,23 @@
   <h1>Welcome to our Book Reservation App</h1>
 </header>
 <main>
+
+  <div th:if="${session.lastBooks}">
+      <ol>
+        <li th:each="book : ${session.lastBooks}" th:text="${book}"></li>
+      </ol>
+  </div>
+
   <form action="/" method="POST" >
     <h2>Seach Option</h2>
     <label for="bookName">
       Book Name:
-      <input type="text" id="bookName" name="bookName" required>
+      <input type="text" id="bookName" name="bookName">
     </label>
 
     <label for="bookRating">
       Book Rating
-      <input type="number" id="bookRating" name="bookRating" required>
+      <input type="number" id="bookRating" name="bookRating">
     </label>
 
     <input type="submit" value="Search">
