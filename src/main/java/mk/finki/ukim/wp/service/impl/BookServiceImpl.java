@@ -1,5 +1,6 @@
 package mk.finki.ukim.wp.service.impl;
 
+import mk.finki.ukim.wp.model.Author;
 import mk.finki.ukim.wp.model.Book;
 import mk.finki.ukim.wp.repository.BookRepository;
 import mk.finki.ukim.wp.service.BookService;
@@ -30,9 +31,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void save(Book book) {
-        bookRepository.save(book);
+    public void save(String title, String genre, Double averageRating, Author author) {
+        bookRepository.save(title,genre,averageRating,author);
     }
+
 
     @Override
     public Book findById(Long id) {
@@ -40,7 +42,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(Book book) {
-        bookRepository.deleteBook(book);
+    public void deleteBook(Long id) {
+        bookRepository.deleteBook(id);
     }
 }

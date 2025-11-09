@@ -1,21 +1,17 @@
 package mk.finki.ukim.wp.web.controller;
 
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import mk.finki.ukim.wp.model.Author;
 import mk.finki.ukim.wp.model.Book;
-import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
-import mk.finki.ukim.wp.service.AuthorService;
-import mk.finki.ukim.wp.service.BookReservationService;
+import mk.finki.ukim.wp.model.Author;
 import mk.finki.ukim.wp.service.BookService;
+import mk.finki.ukim.wp.service.AuthorService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
+@RequestMapping("/books")
 public class BookController {
+
     private final BookService bookService;
     private final AuthorService authorService;
 
@@ -24,63 +20,75 @@ public class BookController {
         this.authorService = authorService;
     }
 
-    @GetMapping("/books")
-    public String getBooksPage(@RequestParam(required = false) String error, Model model){
-        if(error != null && !error.isEmpty()){
-            model.addAttribute("error", error);
+    // -----------------------------
+    // LIST ALL BOOKS
+    // -----------------------------
+    @GetMapping
+    public String listBooks(@RequestParam(required = false) String searchText,
+                            @RequestParam(required = false) Double rating,
+                            Model model) {
+        if (searchText != null && rating != null) {
+            model.addAttribute("books", bookService.searchBooks(searchText, rating));
+        } else {
+            model.addAttribute("books", bookService.listAll());
         }
-        model.addAttribute("books", bookService.listAll());
-
-        return "listBooks";
+        return "listBooks"; // corresponds to listBooks.html
     }
 
-    @PostMapping("/books")
-    public String filter(@RequestParam String bookName, @RequestParam Double bookRating, Model model){
-        model.addAttribute("books", bookService.searchBooks(bookName, bookRating));
-        return "listBooks";
-    }
-
+    // -----------------------------
+    // SHOW FORM TO ADD NEW BOOK
+    // -----------------------------
     @GetMapping("/add")
-    public String showAddForm(Model model){
+    public String showAddForm(Model model) {
         model.addAttribute("book", new Book());
         model.addAttribute("authors", authorService.findAll());
-        return "book-form";
+        return "bookForm"; // corresponds to bookForm.html
     }
 
-    @PostMapping("/books/add")
-    public String saveBook(@RequestParam String title, @RequestParam String genre, @RequestParam Double averageRating, @RequestParam Long authorId){
-        Author author = authorService.findById(authorId);
-        bookService.save(new Book(title, genre, averageRating, author));
+    // -----------------------------
+    // SAVE NEW BOOK
+    // -----------------------------
+    @PostMapping("/add")
+    public String saveBook(@RequestParam String title,
+                           @RequestParam String genre,
+                           @RequestParam Double averageRating,
+                           @RequestParam Long authorId) {
+        Author author = authorService.findById(authorId).get();
+        bookService.save(title, genre, averageRating, author);
         return "redirect:/books";
     }
 
-    @GetMapping("/books/edit/{bookId}")
-    public String showEditForm(@PathVariable Long bookId, Model model){
+    // -----------------------------
+    // SHOW FORM TO EDIT BOOK
+    // -----------------------------
+    @GetMapping("/edit/{bookId}")
+    public String showEditForm(@PathVariable Long bookId, Model model) {
         Book book = bookService.findById(bookId);
         model.addAttribute("book", book);
         model.addAttribute("authors", authorService.findAll());
-        return "book-form";
+        return "bookForm"; // reuse same form for add & edit
     }
 
-    @PostMapping("/books/edit/{bookId}")
-    public String editBook(@PathVariable Long bookId, @RequestParam String title, @RequestParam String genre, @RequestParam Double averageRating, @RequestParam Long authorId){
-        Book bookToEdit = bookService.findById(bookId);
-        bookToEdit.setTitle(title);
-        bookToEdit.setGenre(genre);
-        bookToEdit.setAverageRating(averageRating);
-        bookToEdit.setAuthor(authorService.findById(authorId));
-
-        bookService.save(bookToEdit);
+    // -----------------------------
+    // UPDATE EXISTING BOOK
+    // -----------------------------
+    @PostMapping("/edit/{bookId}")
+    public String updateBook(@PathVariable Long bookId,
+                             @RequestParam String title,
+                             @RequestParam String genre,
+                             @RequestParam Double averageRating,
+                             @RequestParam Long authorId) {
+        Author author = authorService.findById(authorId).get();
+        bookService.save(title, genre, averageRating, author);
         return "redirect:/books";
     }
 
-    @PostMapping("/books/delete/{id}")
-    public String deleteBook(@PathVariable Long id){
-        Book bookToDelete = bookService.findById(id);
-        if(bookToDelete != null){
-            bookService.deleteBook(bookToDelete);
-        }
+    // -----------------------------
+    // DELETE BOOK
+    // -----------------------------
+    @PostMapping("/delete/{bookId}")
+    public String deleteBook(@PathVariable Long bookId) {
+        bookService.deleteBook(bookId);
         return "redirect:/books";
     }
-
 }

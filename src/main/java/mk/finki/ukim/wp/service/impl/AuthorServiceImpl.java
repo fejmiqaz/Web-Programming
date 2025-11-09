@@ -6,17 +6,23 @@ import mk.finki.ukim.wp.service.AuthorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private AuthorRepository authorRepository;
-    @Override
-    public List<Author> findAll() {
-        return authorRepository.findAll();
+
+    public AuthorServiceImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
 
     @Override
-    public Author findById(Long id) {
+    public List<Author> findAll() {
+        return authorRepository.findAllAuthors();
+    }
+
+    @Override
+    public Optional<Author> findById(Long id) {
         return authorRepository.findById(id);
     }
 }

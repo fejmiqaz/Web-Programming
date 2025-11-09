@@ -34,4 +34,24 @@ public class Author {
     public String getBiography() {
         return biography;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
 }

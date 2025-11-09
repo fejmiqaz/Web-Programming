@@ -12,15 +12,12 @@ import java.util.List;
 
 @Component
 public class DataHolder {
-    public static List<Book> books = null;
-    public static List<BookReservation> reservations = null;
-    public static List<Author> authors = null;
+    public static List<Book> books = new ArrayList<>();
+    public static List<BookReservation> reservations = new ArrayList<>();
+    public static List<Author> authors = new ArrayList<>();
 
     @PostConstruct
     public void init(){
-        books = new ArrayList<>();
-        reservations = new ArrayList<>();
-        authors = new ArrayList<>();
 
         authors.add(new Author(1L, "George", "Orwell", "United Kingdom",
                 "George Orwell was an English novelist, essayist, and critic, best known for his works '1984' and 'Animal Farm'."));

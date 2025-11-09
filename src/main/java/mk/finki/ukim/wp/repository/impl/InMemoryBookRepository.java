@@ -1,10 +1,12 @@
 package mk.finki.ukim.wp.repository.impl;
 
 import mk.finki.ukim.wp.bootstrap.DataHolder;
+import mk.finki.ukim.wp.model.Author;
 import mk.finki.ukim.wp.model.Book;
 import mk.finki.ukim.wp.repository.BookRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 @Repository
@@ -20,7 +22,8 @@ public class InMemoryBookRepository implements BookRepository {
     }
 
     @Override
-    public void save(Book book) {
+    public void save(String title, String genre, Double averageRating, Author author) {
+        Book book = new Book(title, genre, averageRating, author);
         DataHolder.books.add(book);
     }
 
@@ -30,7 +33,7 @@ public class InMemoryBookRepository implements BookRepository {
     }
 
     @Override
-    public void deleteBook(Book book) {
-        DataHolder.books.remove(book);
+    public void deleteBook(Long id) {
+        DataHolder.books.removeIf(b->b.getId().equals(id));
     }
 }

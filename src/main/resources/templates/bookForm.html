@@ -2,23 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title th:text="${book.id} != null ? 'Edit Book' : 'Add New Book'">Book Form</title>
+  <title>Book Form</title>
 </head>
 <body>
-<h1 th:text="${book.id} != null ? 'Edit Book' : 'Add New Book'"></h1>
 
-<form method="post" th:action="@{${book != null ? '/books/edit/' + ${book.getId()} : '/categories/'}}">
+<form method="post" action="/books/add">
   <label for="title">Title:</label>
-  <input type="text" id="title" name="title" th:value="${book.title}" required><br><br>
+  <input type="text" id="title" name="title" th:value="${book.title}"><br><br>
 
   <label for="genre">Genre:</label>
-  <input type="text" id="genre" name="genre" th:value="${book.genre}" required><br><br>
+  <input type="text" id="genre" name="genre" th:value="${book.genre}"><br><br>
 
   <label for="averageRating">Average Rating:</label>
-  <input type="number" id="averageRating" name="averageRating" step="0.1" th:value="${book.averageRating}" required><br><br>
+  <input type="number" id="averageRating" name="averageRating" step="0.1" th:value="${book.averageRating}"><br><br>
 
   <label for="author">Author:</label>
-  <select id="author" name="authorId" required>
+  <select id="author" name="authorId">
     <option value="">Select author</option>
     <option th:each="author : ${authors}"
             th:value="${author.id}"
