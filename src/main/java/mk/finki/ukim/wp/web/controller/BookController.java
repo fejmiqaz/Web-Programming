@@ -20,9 +20,6 @@ public class BookController {
         this.authorService = authorService;
     }
 
-    // -----------------------------
-    // LIST ALL BOOKS
-    // -----------------------------
     @GetMapping
     public String listBooks(@RequestParam(required = false) String searchText,
                             @RequestParam(required = false) Double rating,
@@ -32,22 +29,16 @@ public class BookController {
         } else {
             model.addAttribute("books", bookService.listAll());
         }
-        return "listBooks"; // corresponds to listBooks.html
+        return "listBooks";
     }
 
-    // -----------------------------
-    // SHOW FORM TO ADD NEW BOOK
-    // -----------------------------
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("book", new Book());
         model.addAttribute("authors", authorService.findAll());
-        return "bookForm"; // corresponds to bookForm.html
+        return "bookForm";
     }
 
-    // -----------------------------
-    // SAVE NEW BOOK
-    // -----------------------------
     @PostMapping("/add")
     public String saveBook(@RequestParam String title,
                            @RequestParam String genre,
@@ -58,20 +49,14 @@ public class BookController {
         return "redirect:/books";
     }
 
-    // -----------------------------
-    // SHOW FORM TO EDIT BOOK
-    // -----------------------------
     @GetMapping("/edit/{bookId}")
     public String showEditForm(@PathVariable Long bookId, Model model) {
         Book book = bookService.findById(bookId);
         model.addAttribute("book", book);
         model.addAttribute("authors", authorService.findAll());
-        return "bookForm"; // reuse same form for add & edit
+        return "bookForm";
     }
 
-    // -----------------------------
-    // UPDATE EXISTING BOOK
-    // -----------------------------
     @PostMapping("/edit/{bookId}")
     public String updateBook(@PathVariable Long bookId,
                              @RequestParam String title,
@@ -83,9 +68,6 @@ public class BookController {
         return "redirect:/books";
     }
 
-    // -----------------------------
-    // DELETE BOOK
-    // -----------------------------
     @PostMapping("/delete/{bookId}")
     public String deleteBook(@PathVariable Long bookId) {
         bookService.deleteBook(bookId);

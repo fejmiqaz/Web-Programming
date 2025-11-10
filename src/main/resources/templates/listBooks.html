@@ -49,7 +49,6 @@
 
 <main>
 
-    <!-- Optional: Recently viewed books -->
     <div th:if="${session.lastBooks}">
         <h3>Recently Viewed:</h3>
         <ol>
@@ -57,8 +56,6 @@
         </ol>
     </div>
 
-    <!-- Search form -->
-    <!-- ✅ controller uses GET @RequestParam("searchText") and ("rating") -->
     <form th:action="@{/books}" method="get">
         <h2>Search Option</h2>
         <label>Book Name:
@@ -70,7 +67,6 @@
         <input type="submit" value="Search">
     </form>
 
-    <!-- ✅ controller mapping for Add is /books/add -->
     <a th:href='@{/books/add}'>
         <button type="button">Add New Book</button>
     </a>
@@ -86,12 +82,10 @@
             <span th:text="${book.author.name + ' ' + book.author.surname}"></span>
 
             <div class="actions">
-                <!-- ✅ edit URL should match @GetMapping("/edit/{bookId}") -->
                 <a th:href="@{/books/edit/{bookId}(bookId=${book.id})}">
                     <button type="button">Edit</button>
                 </a>
 
-                <!-- ✅ delete URL should match @PostMapping("/delete/{bookId}") -->
                 <form th:action="@{/books/delete/{bookId}(bookId=${book.id})}" method="post" style="display:inline;">
                     <button type="submit">Delete</button>
                 </form>
@@ -100,10 +94,7 @@
     </th:block>
 
 
-    <!-- Reservation form -->
-    <!-- (you can later map /books/reservation if you add that feature) -->
     <form th:action="@{/books/reservation}" method="post">
-        <!-- Reservation details -->
         <h2>Enter your information:</h2>
         <label>Your Name:</label>
         <input type="text" name="readerName" required><br/>
