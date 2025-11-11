@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/books")
+@RequestMapping(path={"/books", "/"})
 public class BookController {
 
     private final BookService bookService;
@@ -68,7 +68,7 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @PostMapping("/delete/{bookId}")
+    @GetMapping("/delete/{bookId}")
     public String deleteBook(@PathVariable Long bookId) {
         bookService.deleteBook(bookId);
         return "redirect:/books";

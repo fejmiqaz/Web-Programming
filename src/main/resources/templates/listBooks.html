@@ -71,30 +71,27 @@
         <button type="button">Add New Book</button>
     </a>
 
-    <h2>Choose a book:</h2>
+    <form th:action="@{/books/reservation}" method="post">
+        <h2>Choose a book:</h2>
 
-    <th:block th:each="book : ${books}">
-        <div class="book-option">
-            <input type="radio" name="bookId" th:value="${book.id}">
-            <span th:text="${book.title}"></span> |
-            <span th:text="${book.genre}"></span> |
-            <span th:text="${book.averageRating}"></span> |
-            <span th:text="${book.author.name + ' ' + book.author.surname}"></span>
+        <th:block th:each="book : ${books}">
+            <div class="book-option">
+                <input type="radio" name="bookId" th:value="${book.id}">
+                <span th:text="${book.title}"></span> |
+                <span th:text="${book.genre}"></span> |
+                <span th:text="${book.averageRating}"></span> |
+                <span th:text="${book.author.name + ' ' + book.author.surname}"></span>
 
-            <div class="actions">
-                <a th:href="@{/books/edit/{bookId}(bookId=${book.id})}">
+                <a th:href="@{'/books/edit/{bookId}' (bookId=${book.getId()})}">
                     <button type="button">Edit</button>
                 </a>
 
-                <form th:action="@{/books/delete/{bookId}(bookId=${book.id})}" method="post" style="display:inline;">
-                    <button type="submit">Delete</button>
-                </form>
+                <a th:href="@{'/books/delete/{bookId}' (bookId=${book.getId()})}">
+                    <button type="button">Delete</button>
+                </a>
             </div>
-        </div>
-    </th:block>
+        </th:block>
 
-
-    <form th:action="@{/books/reservation}" method="post">
         <h2>Enter your information:</h2>
         <label>Your Name:</label>
         <input type="text" name="readerName" required><br/>
