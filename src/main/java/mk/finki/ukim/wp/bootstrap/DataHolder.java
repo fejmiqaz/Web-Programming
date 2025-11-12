@@ -19,13 +19,13 @@ public class DataHolder {
     @PostConstruct
     public void init(){
 
-        authors.add(new Author(1L, "George", "Orwell", "United Kingdom",
+        authors.add(new Author( "George", "Orwell", "United Kingdom",
                 "George Orwell was an English novelist, essayist, and critic, best known for his works '1984' and 'Animal Farm'."));
 
-        authors.add(new Author(2L, "Jane", "Austen", "United Kingdom",
+        authors.add(new Author("Jane", "Austen", "United Kingdom",
                 "Jane Austen was an English novelist known for her insightful portrayals of society and class, especially in 'Pride and Prejudice'."));
 
-        authors.add(new Author(3L, "Gabriel", "Garcia Marquez", "Colombia",
+        authors.add(new Author("Gabriel", "Garcia Marquez", "Colombia",
                 "Gabriel García Márquez was a Colombian novelist and Nobel Prize winner, famous for pioneering magical realism in 'One Hundred Years of Solitude'."));
 
 

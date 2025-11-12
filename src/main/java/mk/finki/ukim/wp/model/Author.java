@@ -7,8 +7,10 @@ public class Author {
     private String country;
     private String biography;
 
-    public Author(Long id, String name, String surname, String country, String biography) {
-        this.id = id;
+    private static long COUNTER = 1L;
+
+    public Author(String name, String surname, String country, String biography) {
+        this.id = COUNTER++;
         this.name = name;
         this.surname = surname;
         this.country = country;

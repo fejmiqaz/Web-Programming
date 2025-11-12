@@ -44,7 +44,7 @@ public class BookController {
                            @RequestParam String genre,
                            @RequestParam Double averageRating,
                            @RequestParam Long authorId) {
-        Author author = authorService.findById(authorId).get();
+        Author author = authorService.findById(authorId);
         bookService.save(title, genre, averageRating, author);
         return "redirect:/books";
     }
@@ -63,7 +63,7 @@ public class BookController {
                              @RequestParam String genre,
                              @RequestParam Double averageRating,
                              @RequestParam Long authorId) {
-        Author author = authorService.findById(authorId).get();
+        Author author = authorService.findById(authorId);
         bookService.save(title, genre, averageRating, author);
         return "redirect:/books";
     }

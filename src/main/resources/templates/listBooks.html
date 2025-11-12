@@ -71,6 +71,14 @@
         <button type="button">Add New Book</button>
     </a>
 
+    <a th:href='@{/authors/add}'>
+        <button type="button">Add New Author</button>
+    </a>
+
+    <a th:href="@{/authors}">
+        <button type="button">See all authors</button>
+    </a>
+
     <form th:action="@{/books/reservation}" method="post">
         <h2>Choose a book:</h2>
 
@@ -91,6 +99,7 @@
                 </a>
             </div>
         </th:block>
+
 
         <h2>Enter your information:</h2>
         <label>Your Name:</label>

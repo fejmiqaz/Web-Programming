@@ -7,5 +7,7 @@ import java.util.Optional;
 
 public interface AuthorService {
     public List<Author> findAll();
-    public Optional<Author> findById(Long id);
+    public Author findById(Long id);
+    public void deleteAuthor(Long id);
+    public void save(String name, String surname, String country, String bio);
 }

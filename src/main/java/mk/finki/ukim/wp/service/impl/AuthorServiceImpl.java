@@ -22,7 +22,17 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Optional<Author> findById(Long id) {
-        return authorRepository.findById(id);
+    public Author findById(Long id) {
+        return authorRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public void deleteAuthor(Long id) {
+        authorRepository.deleteAuthor(id);
+    }
+
+    @Override
+    public void save(String name, String surname, String country, String bio) {
+        authorRepository.save(name, surname, country, bio);
     }
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Authors</title>
+</head>
+<body>
+
+<th:block th:each="author : ${authors}">
+    <div>
+        <input type="radio" name="id" th:value="${author?.getId()}">
+        <span th:text="${author?.getName()}"></span> |
+        <span th:text="${author?.getSurname()}"></span>
+
+        <a th:href="@{'/authors/edit/{id}' (id=${author.getId()})}">
+            <button type="button">Edit</button>
+        </a>
+
+        <a th:href="@{'/authors/delete/{id}' (id=${author.getId()})}">
+            <button type="button">Delete</button>
+        </a>
+    </div>
+</th:block>
+<a th:href="@{/books}">
+    <button>Go to home page</button>
+</a>
+
+
+</body>
+</html>
