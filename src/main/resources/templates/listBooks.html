@@ -79,6 +79,17 @@
         <button type="button">See all authors</button>
     </a>
 
+    <br>
+
+    <form th:action="@{/books/search-author}" method="get">
+        <h2>Search Books by Author</h2>
+        <label>Author Name:
+            <input type="text" name="authorName">
+        </label>
+        <button type="button">Search authors</button>
+    </form>
+
+
     <form th:action="@{/books/reservation}" method="post">
         <h2>Choose a book:</h2>
 

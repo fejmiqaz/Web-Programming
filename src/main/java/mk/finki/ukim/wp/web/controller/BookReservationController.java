@@ -2,7 +2,6 @@ package mk.finki.ukim.wp.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import mk.finki.ukim.wp.model.Book;
-import mk.finki.ukim.wp.model.BookReservation;
 import mk.finki.ukim.wp.service.AuthorService;
 import mk.finki.ukim.wp.service.BookReservationService;
 import mk.finki.ukim.wp.service.BookService;

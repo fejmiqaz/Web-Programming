@@ -1,14 +1,11 @@
 package mk.finki.ukim.wp.web.controller;
 
-import mk.finki.ukim.wp.model.Book;
 import mk.finki.ukim.wp.model.Author;
 import mk.finki.ukim.wp.service.BookService;
 import mk.finki.ukim.wp.service.AuthorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Controller
 @RequestMapping(path={"/authors"})
@@ -21,9 +18,7 @@ public class AuthorController {
     }
 
     @GetMapping
-    public String listBooks(@RequestParam(required = false) String searchText,
-                            @RequestParam(required = false) Double rating,
-                            Model model) {
+    public String listAuthors(Model model) {
         model.addAttribute("authors", authorService.findAll());
         return "listAuthors";
     }
@@ -34,7 +29,7 @@ public class AuthorController {
     }
 
     @PostMapping("/add")
-    public String saveBook(@RequestParam String name,
+    public String saveAuthor(@RequestParam String name,
                            @RequestParam String surname,
                            @RequestParam String country,
                            @RequestParam String biography) {
@@ -50,17 +45,17 @@ public class AuthorController {
     }
 
     @PostMapping("/edit-form/{id}")
-    public String updateBook(@PathVariable Long id,
+    public String updateAuthor(@PathVariable Long id,
                              @RequestParam String name,
                              @RequestParam String surname,
                              @RequestParam String country,
                              @RequestParam String biography) {
-        authorService.save(name,surname,country,biography);
+        authorService.updateAuthor(id, name,surname,country,biography);
         return "redirect:/authors";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteBook(@PathVariable Long id) {
+    public String deleteAuthor(@PathVariable Long id) {
         authorService.deleteAuthor(id);
         return "redirect:/authors";
     }

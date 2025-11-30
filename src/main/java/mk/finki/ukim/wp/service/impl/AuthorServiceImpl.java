@@ -18,7 +18,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<Author> findAll() {
-        return authorRepository.findAllAuthors();
+        return authorRepository.findAll();
     }
 
     @Override
@@ -28,11 +28,35 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteAuthor(Long id) {
-        authorRepository.deleteAuthor(id);
+        authorRepository.deleteById(id);
     }
 
     @Override
     public void save(String name, String surname, String country, String bio) {
-        authorRepository.save(name, surname, country, bio);
+
+        if(name == null || name.isEmpty() || surname == null || surname.isEmpty() ||
+            country == null || country.isEmpty() || bio == null || bio.isEmpty()){
+            throw new IllegalArgumentException();
+        }
+
+        authorRepository.save(new Author(name,surname,country,bio));
+    }
+
+    @Override
+    public Author updateAuthor(Long id,String name, String surname, String country, String bio) {
+
+        if(name == null || name.isEmpty() || surname == null || surname.isEmpty() ||
+            country == null || country.isEmpty() || bio == null || bio.isEmpty()){
+            throw new IllegalArgumentException();
+        }
+
+        Author author = authorRepository.findById(id).orElseThrow();
+
+        author.setName(name);
+        author.setSurname(surname);
+        author.setBiography(bio);
+        author.setCountry(country);
+
+        return this.authorRepository.save(author);
     }
 }

@@ -6,27 +6,27 @@
 </head>
 <body>
 
-<form method="post" action="/books/add">
+<form method="post" th:action="@{${book == null ? '/books/add' : '/books/edit/' + book.getId()}}">
   <label for="title">Title:</label>
-  <input type="text" id="title" name="title" th:value="${book.title}"><br><br>
+  <input type="text" id="title" name="title" th:value="${book?.title}"><br><br>
 
   <label for="genre">Genre:</label>
-  <input type="text" id="genre" name="genre" th:value="${book.genre}"><br><br>
+  <input type="text" id="genre" name="genre" th:value="${book?.genre}"><br><br>
 
   <label for="averageRating">Average Rating:</label>
-  <input type="number" id="averageRating" name="averageRating" step="0.1" th:value="${book.averageRating}"><br><br>
+  <input type="number" id="averageRating" name="averageRating" step="0.1" th:value="${book?.averageRating}"><br><br>
 
   <label for="author">Author:</label>
   <select id="author" name="authorId">
     <option value="">Select author</option>
     <option th:each="author : ${authors}"
-            th:value="${author.id}"
-            th:text="${author.name + ' ' + author.surname}"
-            th:selected="${book.author != null} ? ${author.id} == ${book.author.id} : false">
+            th:value="${author?.getId()}"
+            th:text="${author?.getName() + ' ' + author?.getSurname()}"
+            th:selected="${book?.getAuthor() != null} ? ${author?.getId()} == ${book?.author?.getId()} : false">
     </option>
   </select><br><br>
 
-  <button type="submit" th:text="${book.id} != null ? 'Update Book' : 'Add Book'"></button>
+  <button type="submit" th:text="${book?.getId()} != null ? 'Update Book' : 'Add Book'"></button>
   <a th:href="@{/books}"><button type="button">Cancel</button></a>
 </form>
 

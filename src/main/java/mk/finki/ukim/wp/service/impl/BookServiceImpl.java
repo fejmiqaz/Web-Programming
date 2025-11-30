@@ -27,22 +27,48 @@ public class BookServiceImpl implements BookService {
         if(text == null || text.isEmpty() || rating == null || rating.isNaN()){
             throw new IllegalArgumentException();
         }
-        return bookRepository.searchBooks(text, rating);
+        return bookRepository.searchBooksByTitleAndAverageRating(text, rating);
     }
 
     @Override
-    public void save(String title, String genre, Double averageRating, Author author) {
-        bookRepository.save(title,genre,averageRating,author);
+    public Book save(String title, String genre, Double averageRating, Author author) {
+        Book book;
+
+        book = new Book(title,genre,averageRating,author);
+
+        return bookRepository.save(book);
+    }
+
+    @Override
+    public Book updateBook(Long id,String title, String genre, Double averageRating, Author author) {
+        if(title.isEmpty() || genre.isEmpty() || averageRating.isNaN() || author == null){
+            throw new IllegalArgumentException();
+        }
+
+        Book book = bookRepository.findById(id).orElseThrow();
+
+        book.setTitle(title);
+        book.setGenre(genre);
+        book.setAverageRating(averageRating);
+        book.setAuthor(author);
+
+        return bookRepository.save(book);
+
     }
 
 
     @Override
     public Book findById(Long id) {
-        return bookRepository.findById(id);
+        return bookRepository.findById(id).get();
     }
 
     @Override
     public void deleteBook(Long id) {
-        bookRepository.deleteBook(id);
+        bookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Book> listBooksByAuthorName(String authorName) {
+        return bookRepository.findAllByAuthor_Id(authorName);
     }
 }

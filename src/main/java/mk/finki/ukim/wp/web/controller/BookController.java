@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(path={"/books", "/"})
 public class BookController {
@@ -15,7 +17,7 @@ public class BookController {
     private final BookService bookService;
     private final AuthorService authorService;
 
-    public BookController(BookService bookService, AuthorService authorService) {
+    public BookController(BookService bookService, AuthorService authorService){
         this.bookService = bookService;
         this.authorService = authorService;
     }
@@ -24,11 +26,25 @@ public class BookController {
     public String listBooks(@RequestParam(required = false) String searchText,
                             @RequestParam(required = false) Double rating,
                             Model model) {
+        List<Book> books;
         if (searchText != null && rating != null) {
-            model.addAttribute("books", bookService.searchBooks(searchText, rating));
+           books = bookService.searchBooks(searchText, rating);
         } else {
-            model.addAttribute("books", bookService.listAll());
+            books = bookService.listAll();
         }
+
+        model.addAttribute("books", books);
+
+        return "listBooks";
+    }
+
+    @GetMapping("/search-author")
+    public String displayBooksByAuthor(@RequestParam String name, Model model){
+
+        List<Book> booksByAuthor = bookService.listBooksByAuthorName(name);
+
+        model.addAttribute("books", booksByAuthor);
+
         return "listBooks";
     }
 
@@ -45,7 +61,7 @@ public class BookController {
                            @RequestParam Double averageRating,
                            @RequestParam Long authorId) {
         Author author = authorService.findById(authorId);
-        bookService.save(title, genre, averageRating, author);
+        bookService.save( title, genre, averageRating, author);
         return "redirect:/books";
     }
 
@@ -64,7 +80,7 @@ public class BookController {
                              @RequestParam Double averageRating,
                              @RequestParam Long authorId) {
         Author author = authorService.findById(authorId);
-        bookService.save(title, genre, averageRating, author);
+        bookService.updateBook(bookId, title, genre, averageRating, author);
         return "redirect:/books";
     }
 
