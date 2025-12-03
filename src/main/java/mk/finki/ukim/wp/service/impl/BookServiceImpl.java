@@ -23,11 +23,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> searchBooksByRating(String text, Double rating) {
-        if(text == null || text.isEmpty() || rating == null || rating.isNaN()){
-            throw new IllegalArgumentException();
-        }
-        return bookRepository.searchBooksByTitleAndAverageRating(text, rating);
+    public List<Book> searchBooksByRating(Double rating) {
+        return bookRepository.findBookByAverageRatingGreaterThanEqual(rating);
     }
 
     @Override
@@ -40,7 +37,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book updateBook(Long id,String title, String genre, Double averageRating, Author author) {
+    public void updateBook(Long id, String title, String genre, Double averageRating, Author author) {
         if(title.isEmpty() || genre.isEmpty() || averageRating.isNaN() || author == null){
             throw new IllegalArgumentException();
         }
@@ -52,7 +49,7 @@ public class BookServiceImpl implements BookService {
         book.setAverageRating(averageRating);
         book.setAuthor(author);
 
-        return bookRepository.save(book);
+        bookRepository.save(book);
 
     }
 
@@ -68,7 +65,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> listBooksByAuthorName(String authorName) {
+    public List<Book> listBooksByAuthorId(Long authorName) {
         return bookRepository.findAllByAuthor_Id(authorName);
     }
 }

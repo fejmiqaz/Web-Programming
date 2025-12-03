@@ -23,27 +23,25 @@ public class BookController {
     }
 
     @GetMapping
-    public String listBooks(@RequestParam(required = false) String searchText,
-                            @RequestParam(required = false) Double rating,
+    public String listBooks(@RequestParam(required = false) Double rating,
                             Model model) {
         List<Book> books;
-        if (searchText != null && rating != null) {
-           books = bookService.searchBooksByRating(searchText, rating);
+        if (rating != null) {
+           books = bookService.searchBooksByRating(rating);
         } else {
             books = bookService.listAll();
         }
 
         model.addAttribute("books", books);
+        model.addAttribute("authors", authorService.findAll());
 
         return "listBooks";
     }
 
-    @GetMapping("/search-author")
-    public String displayBooksByAuthor(@RequestParam String name, Model model){
+    @PostMapping
+    public String displayBooksByAuthor(@RequestParam Long id, Model model){
 
-        List<Book> booksByAuthor = bookService.listBooksByAuthorName(name);
-
-        model.addAttribute("books", booksByAuthor);
+        model.addAttribute("books", bookService.listBooksByAuthorId(id));
 
         return "listBooks";
     }
@@ -61,7 +59,7 @@ public class BookController {
                            @RequestParam Double averageRating,
                            @RequestParam Long authorId) {
         Author author = authorService.findById(authorId);
-        bookService.save( title, genre, averageRating, author);
+        bookService.save(title, genre, averageRating, author);
         return "redirect:/books";
     }
 

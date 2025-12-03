@@ -6,7 +6,6 @@ import mk.finki.ukim.wp.service.AuthorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -43,7 +42,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author updateAuthor(Long id,String name, String surname, String country, String bio) {
+    public void updateAuthor(Long id, String name, String surname, String country, String bio) {
 
         if(name == null || name.isEmpty() || surname == null || surname.isEmpty() ||
             country == null || country.isEmpty() || bio == null || bio.isEmpty()){
@@ -57,6 +56,6 @@ public class AuthorServiceImpl implements AuthorService {
         author.setBiography(bio);
         author.setCountry(country);
 
-        return this.authorRepository.save(author);
+        this.authorRepository.save(author);
     }
 }

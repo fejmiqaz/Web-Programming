@@ -7,10 +7,12 @@ import java.util.List;
 
 public interface BookService {
     List<Book> listAll();
-    List<Book> searchBooksByRating(String text, Double rating);
+
+    List<Book> searchBooksByRating(Double rating);
+
     Book save(String title, String genre, Double averageRating, Author author);
-    Book updateBook(Long id, String title, String genre, Double averageRating, Author author);
+    void updateBook(Long id, String title, String genre, Double averageRating, Author author);
     Book findById(Long id);
     void deleteBook(Long id);
-    List<Book> listBooksByAuthorName(String name);
+    List<Book> listBooksByAuthorId(Long name);
 }
