@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
     <meta charset="utf-8">
     <title>Book Reservation - Welcome and choose a Book</title>
-    <style type="text/css">
+    <style>
         body {
             width: 800px;
             margin: auto;
@@ -27,14 +27,6 @@
 
         .book-option:hover {
             background-color: #f5f5f5;
-        }
-
-        .actions {
-            margin-top: 5px;
-        }
-
-        .actions form {
-            display: inline;
         }
 
         button {
@@ -107,7 +99,9 @@
 
         <th:block th:each="book : ${books}">
             <div class="book-option">
-                <input type="radio" name="bookId" th:value="${book.id}">
+                <label>
+                    <input type="radio" name="bookId" th:value="${book.id}">
+                </label>
                 <span th:text="${book.title}"></span> |
                 <span th:text="${book.genre}"></span> |
                 <span th:text="${book.averageRating}"></span> |
@@ -126,12 +120,18 @@
 
         <h2>Enter your information:</h2>
         <label>Your Name:</label>
-        <input type="text" name="readerName"><br/>
+        <label>
+            <input type="text" name="readerName">
+        </label><br/>
         <label>Your Address:</label>
-        <input type="text" name="readerAddress"><br/>
+        <label>
+            <input type="text" name="readerAddress">
+        </label><br/>
 
         <h2>Choose number of copies:</h2>
-        <input type="number" name="numCopies" min="1" max="10"><br/><br/>
+        <label>
+            <input type="number" name="numCopies" min="1" max="10">
+        </label><br/><br/>
 
         <input type="submit" value="Reserve Book">
     </form>
