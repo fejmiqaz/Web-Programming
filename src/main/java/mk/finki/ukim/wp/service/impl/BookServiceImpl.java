@@ -23,7 +23,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> searchBooks(String text, Double rating) {
+    public List<Book> searchBooksByRating(String text, Double rating) {
         if(text == null || text.isEmpty() || rating == null || rating.isNaN()){
             throw new IllegalArgumentException();
         }

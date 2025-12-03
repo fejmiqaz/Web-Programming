@@ -45,7 +45,7 @@ public class BookListServlet extends HttpServlet {
         String text = req.getParameter("bookName");
         double rating = Double.parseDouble(req.getParameter("bookRating"));
 
-        context.setVariable("books", bookService.searchBooks(text,rating));
+        context.setVariable("books", bookService.searchBooksByRating(text,rating));
 
         springTemplateEngine.process("listBooks.html", context, resp.getWriter());
     }
