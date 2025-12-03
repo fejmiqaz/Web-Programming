@@ -51,7 +51,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findById(Long id) {
-        return bookRepository.findById(id).get();
+        return bookRepository.findById(id).isPresent() ? bookRepository.findById(id).get() : null;
     }
 
     @Override
