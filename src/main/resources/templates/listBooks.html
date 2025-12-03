@@ -56,17 +56,6 @@
         </ol>
     </div>
 
-    <form th:action="@{/books}" method="get">
-        <h2>Search Option</h2>
-        <label>Book Name:
-            <input type="text" name="searchText">
-        </label>
-        <label>Book Rating:
-            <input type="number" name="rating" step="0.1">
-        </label>
-        <input type="submit" value="Search">
-    </form>
-
     <a th:href='@{/books/add}'>
         <button type="button">Add New Book</button>
     </a>
@@ -79,21 +68,41 @@
         <button type="button">See all authors</button>
     </a>
 
+    <form th:action="@{/books}" method="get">
+        <h2>Search by Title and Rating</h2>
+        <label>Book Name:
+            <input type="text" name="searchText">
+        </label>
+        <label>Book Rating:
+            <input type="number" name="searchRating" step="0.1">
+        </label>
+        <input type="submit" value="Search">
+
+        <h2>Search Books by Author</h2>
+        <label>Author:
+            <select id="author" name="authorId">
+                <option value="">Select author</option>
+                <option th:each="author : ${authors}"
+                        th:value="${author?.getId()}"
+                        th:text="${author?.getName() + ' ' + author?.getSurname()}"
+                        th:selected="${selectedAuthorId == author?.getId()}">
+                </option>
+            </select><br><br>
+        </label>
+        <br>
+        <button type="submit">Search by author</button>
+        <br>
+
+        <h2>Search only by Rating</h2>
+        <label>Rating:
+            <input type="number" name="findByRating">
+        </label>
+        <button type="submit">Search by rating</button>
+    </form>
     <br>
 
-    <h2>Search Books by Author</h2>
-    <label>Author:
-        <select id="author" name="authorId">
-            <option value="">Select author</option>
-            <option th:each="author : ${authors}"
-                    th:value="${author?.getId()}"
-                    th:text="${author?.getName() + ' ' + author?.getSurname()}">
-            </option>
-        </select><br><br>
-        <a href="/books"><button type="submit">Search</button></a>
-    </label>
-
     <form th:action="@{/books/reservation}" method="post">
+
         <h2>Choose a book:</h2>
 
         <th:block th:each="book : ${books}">

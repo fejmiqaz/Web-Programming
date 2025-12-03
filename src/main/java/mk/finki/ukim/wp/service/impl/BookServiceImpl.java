@@ -23,11 +23,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> searchBooksByRating(Double rating) {
-        return bookRepository.findBookByAverageRatingGreaterThanEqual(rating);
-    }
-
-    @Override
     public Book save(String title, String genre, Double averageRating, Author author) {
         Book book;
 
@@ -65,7 +60,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> listBooksByAuthorId(Long authorName) {
-        return bookRepository.findAllByAuthor_Id(authorName);
+    public List<Book> listBooksByAuthorId(Long authorId) {
+        return bookRepository.findAllByAuthor_Id(authorId);
+    }
+
+    @Override
+    public List<Book> searchBooksByRating(Double rating) {
+        return bookRepository.findBookByAverageRatingGreaterThanEqual(rating);
+    }
+
+    @Override
+    public List<Book> searchBooksByTitleAndRating(String searchText, Double searchRating) {
+        return bookRepository.findBookByTitleContainingIgnoreCaseAndAverageRatingGreaterThanEqual(searchText,searchRating);
     }
 }

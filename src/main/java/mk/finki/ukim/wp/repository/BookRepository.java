@@ -14,7 +14,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 //    Optional<Book> findById(Long id);
 //    void deleteBook(Long id);
 
-    List<Book> findAllByAuthor_Id(Long id);
+    List<Book> findAllByAuthor_Id(Long authorId);
 
-    List<Book> findBookByAverageRatingGreaterThanEqual(Double rating);
+    List<Book> findBookByAverageRatingGreaterThanEqual(Double rating); // added this
+
+    List<Book> findBookByTitleContainingIgnoreCaseAndAverageRatingGreaterThanEqual(String searchText, Double searchRating); // fixed this too
 }

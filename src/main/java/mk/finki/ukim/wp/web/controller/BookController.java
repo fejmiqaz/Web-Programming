@@ -23,25 +23,26 @@ public class BookController {
     }
 
     @GetMapping
-    public String listBooks(@RequestParam(required = false) Double rating,
+    public String listBooks(@RequestParam(required = false) Long authorId,
+                            @RequestParam(required = false) Double findByRating,
+                            @RequestParam(required = false) Double searchRating,
+                            @RequestParam(required = false) String searchText,
                             Model model) {
         List<Book> books;
-        if (rating != null) {
-           books = bookService.searchBooksByRating(rating);
-        } else {
+        if(searchText != null && searchRating != null){
+            books = bookService.searchBooksByTitleAndRating(searchText, searchRating); // fixed
+        }else if (findByRating != null) {
+           books = bookService.searchBooksByRating(findByRating); // fixed
+        }else if( authorId != null){
+            books = bookService.listBooksByAuthorId(authorId); // fixed
+        }else {
             books = bookService.listAll();
         }
 
         model.addAttribute("books", books);
         model.addAttribute("authors", authorService.findAll());
 
-        return "listBooks";
-    }
-
-    @PostMapping
-    public String displayBooksByAuthor(@RequestParam Long id, Model model){
-
-        model.addAttribute("books", bookService.listBooksByAuthorId(id));
+        model.addAttribute("selectedAuthorId", authorId); // added this line
 
         return "listBooks";
     }
