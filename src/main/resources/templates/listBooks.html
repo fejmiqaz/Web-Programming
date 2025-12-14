@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security" lang="">
 <head>
     <meta charset="utf-8">
     <title>Book Reservation - Welcome and choose a Book</title>
@@ -41,20 +41,39 @@
 
 <main>
 
-    <div th:if="${session.lastBooks}">
-        <h3>Recently Viewed:</h3>
-        <ol>
-            <li th:each="book : ${session.lastBooks}" th:text="${book}"></li>
-        </ol>
+<!--    <div th:if="${session.lastBooks}">-->
+<!--        <h3>Recently Viewed:</h3>-->
+<!--        <ol>-->
+<!--            <li th:each="book : ${session.lastBooks}" th:text="${book}"></li>-->
+<!--        </ol>-->
+<!--    </div>-->
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/login}">
+            <button type="button">Login</button>
+        </a>
     </div>
 
-    <a th:href='@{/books/add}'>
-        <button type="button">Add New Book</button>
-    </a>
+    <div sec:authorize="isAuthenticated()">
+        <span sec:authentication="name"></span>
+    </div>
 
-    <a th:href='@{/authors/add}'>
-        <button type="button">Add New Author</button>
-    </a>
+    <div sec:authorize="hasRole('ADMIN')">
+        <a th:href='@{/books/add}'>
+            <button type="button">Add New Book</button>
+        </a>
+    </div>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <a th:href='@{/authors/add}'>
+            <button type="button">Add New Author</button>
+        </a>
+    </div>
 
     <a th:href="@{/authors}">
         <button type="button">See all authors</button>
@@ -107,13 +126,17 @@
                 <span th:text="${book.averageRating}"></span> |
                 <span th:text="${book.author.name + ' ' + book.author.surname}"></span>
 
-                <a th:href="@{'/books/edit/{bookId}' (bookId=${book.getId()})}">
-                    <button type="button">Edit</button>
-                </a>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{'/books/edit/{bookId}' (bookId=${book.getId()})}">
+                        <button type="button">Edit</button>
+                    </a>
+                </div>
 
-                <a th:href="@{'/books/delete/{bookId}' (bookId=${book.getId()})}">
-                    <button type="button">Delete</button>
-                </a>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{'/books/delete/{bookId}' (bookId=${book.getId()})}">
+                        <button type="button">Delete</button>
+                    </a>
+                </div>
             </div>
         </th:block>
 
