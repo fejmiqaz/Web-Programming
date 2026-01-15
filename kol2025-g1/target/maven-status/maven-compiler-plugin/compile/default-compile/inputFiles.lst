@@ -1,0 +1,16 @@
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\Kol2025G1Application.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\service\VendorService.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\model\Expense.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\repository\VendorRepository.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\config\SecurityConfig.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\model\exceptions\InvalidVendorIdException.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\repository\ExpenseRepository.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\model\exceptions\InvalidExpenseIdException.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\service\FieldFilterSpecification.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\web\ExpensesController.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\model\Vendor.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\service\impl\ExpenseServiceImpl.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\service\impl\VendorServiceImpl.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\config\DataInitializer.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\model\ExpenseCategory.java
+C:\Users\User\IdeaProjects\kol2025-g1\src\main\java\mk\ukim\finki\wp\kol2025g3\service\ExpenseService.java

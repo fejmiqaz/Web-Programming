@@ -1,0 +1,16 @@
+mk\ukim\finki\wp\kol2025g3\service\impl\ExpenseServiceImpl.class
+mk\ukim\finki\wp\kol2025g3\repository\VendorRepository.class
+mk\ukim\finki\wp\kol2025g3\model\exceptions\InvalidExpenseIdException.class
+mk\ukim\finki\wp\kol2025g3\service\ExpenseService.class
+mk\ukim\finki\wp\kol2025g3\config\SecurityConfig.class
+mk\ukim\finki\wp\kol2025g3\service\VendorService.class
+mk\ukim\finki\wp\kol2025g3\model\ExpenseCategory.class
+mk\ukim\finki\wp\kol2025g3\model\Expense.class
+mk\ukim\finki\wp\kol2025g3\config\DataInitializer.class
+mk\ukim\finki\wp\kol2025g3\Kol2025G1Application.class
+mk\ukim\finki\wp\kol2025g3\repository\ExpenseRepository.class
+mk\ukim\finki\wp\kol2025g3\model\Vendor.class
+mk\ukim\finki\wp\kol2025g3\service\impl\VendorServiceImpl.class
+mk\ukim\finki\wp\kol2025g3\service\FieldFilterSpecification.class
+mk\ukim\finki\wp\kol2025g3\model\exceptions\InvalidVendorIdException.class
+mk\ukim\finki\wp\kol2025g3\web\ExpensesController.class
