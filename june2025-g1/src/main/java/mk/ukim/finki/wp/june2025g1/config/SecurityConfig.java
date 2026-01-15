@@ -1,0 +1,103 @@
+package mk.ukim.finki.wp.june2025g1.config;
+
+import lombok.AllArgsConstructor;
+import org.eclipse.jetty.util.security.Password;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+
+
+/**
+ * This class is used to configure user login on path '/login' and logout on path '/logout'.
+ * After login, the user should be redirected to the '/startups' page. After logout,
+ * the user should be redirected to the '/' page.
+ * The public pages in the application should be '/' and '/startups'.
+ * All other pages should be visible only for a user with admin role.
+ * Furthermore, in the "list.html" template, the 'Edit', 'Delete', 'Add' and 'Deactivate' buttons should only be
+ * visible for a user with admin role.
+ * <p>
+ * For login inMemory users should be used. Their credentials are given below:
+ * [{
+ * username: "user",
+ * password: "user",
+ * role: "USER"
+ * },
+ * <p>
+ * {
+ * username: "admin",
+ * password: "admin",
+ * role: "ADMIN"
+ * }]
+ */
+
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * Remove the implementation of the following method and replace it with your own code to implement the security requests.
+     * If you do not wish to implement the security requests, leave this code as it is.
+     */
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers(httpSecurityHeadersConfigurer ->
+                        httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
+                ).authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/startups")
+                        .permitAll()
+                        .requestMatchers("/**")
+                        .hasRole("ADMIN")
+                        .anyRequest()
+                        .authenticated()
+                ).formLogin(form -> form
+                        .permitAll()
+                        .failureUrl("/login?error=BadCredentials")
+                        .defaultSuccessUrl("/startups", true)
+                ).logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID")
+                );
+        return http.build();
+    }
+
+    //In Memory Authentication
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
+        UserDetails user = User.builder()
+                .username("user")
+                .password(passwordEncoder.encode("user"))
+                .roles("USER")
+                .build();
+
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password(passwordEncoder.encode("admin"))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
+    }
+}
