@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>WP Exam</title>
+</head>
+<body>
+
+<div>
+    <!-- The form below should invoke the method PostsController.listAll -->
+    <form id="filter-form" th:action="@{/posts}" th:method="get">
+        <label for="tags">Tag</label>
+        <select id="tags" name="tagId">
+            <option value="">All</option>
+            <option th:each="t : ${AllTags}"
+                    th:value="${t.id}"
+                    th:text="${t.name}"
+                    th:selected="${tagId != null && tagId == t.id}"></option>
+            <!-- For each tag you should have one <option> like below  -->
+        </select>
+        <label for="postType">Type</label>
+        <select id="postType" name="postType">
+            <option value="">All</option>
+            <option th:each="p : ${postTypes}"
+                    th:value="${p}"
+                    th:text="${p}"
+                    th:selected="${postType != null && postType == p}"></option>
+            <!-- For each postType you should have one <option> like below  -->
+        </select>
+        <button id="filter" type="submit">Filter</button>
+    </form>
+    <div sec:authorize="hasRole('ADMIN')">
+        <!-- PostsController.showAdd -->
+        <a th:href="@{/posts/add}" class="add-item">
+            Add new post
+        </a>
+    </div>
+    <table>
+        <tr>
+            <th>Post Title</th>
+            <th>Post Content</th>
+            <th>Date of Creation</th>
+            <th>Post Type</th>
+            <th>Tags</th>
+            <th>Likes</th>
+            <th>Actions</th>
+        </tr>
+        <!-- For each post you should have one <tr> like below -->
+        <tr class="item" th:each="post : ${posts}">
+            <td th:text="${post.title}">[post.title]</td>
+            <td th:text="${post.content}">[post.content]</td>
+            <td th:text="${post.dateCreated}">[post.dateCreated]</td>
+            <td th:text="${post.postType}">[post.postType]</td>
+            <td>
+                <ul>
+                    <!-- For each post's tag you should display one <li> element like the one below -->
+                    <li th:each="tag : ${post.tags}"
+                        th:text="${tag.name}">[tag.name]</li>
+                </ul>
+            </td>
+            <td th:text="${post.likes}">[post.likes]</td>
+            <td>
+                <!-- PostsController.delete -->
+                <div sec:authorize="hasRole('ADMIN')">
+                    <form th:action="@{/posts/delete/{id}(id=${post.id})}" method="post">
+                        <button type="submit" class="delete-item">Delete</button>
+                    </form>
+                    <!-- PostsController.showEdit -->
+                    <a class="edit-item" th:href="@{/posts/edit/{id}(id=${post.id})}">Edit</a>
+                </div>
+                <!-- PostsController.like -->
+                <div sec:authorize="hasRole('USER')">
+                    <form th:action="@{/posts/like/{id}(id=${post.id})}" method="post">
+                        <button type="submit" class="like-item">Like</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div>
+    <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</div>
+</body>
+</html>
